@@ -1,0 +1,105 @@
+import java.util.Scanner;
+
+// Class to represent a subject
+class Subject {
+    int subjectMarks;
+    int credits;
+    int grade;
+
+    // Method to calculate grade based on marks
+    void calculateGrade() {
+        if (subjectMarks >= 90) {
+            grade = 10;
+        } else if (subjectMarks >= 80) {
+            grade = 9;
+        } else if (subjectMarks >= 70) {
+            grade = 8;
+        } else if (subjectMarks >= 60) {
+            grade = 7;
+        } else if (subjectMarks >= 50) {
+            grade = 6;
+        } else if (subjectMarks >= 40) {
+            grade = 5;
+        } else {
+            grade = 0;  // Failed subject
+        }
+    }
+}
+
+// Class to represent a student
+class Student {
+    String name;
+    String usn;
+    double SGPA;
+    Subject[] subjects;
+    Scanner s = new Scanner(System.in);
+
+    // Constructor
+    Student() {
+        subjects = new Subject[8];  // Array of 8 subjects
+        for (int i = 0; i < 8; i++) {
+            subjects[i] = new Subject();  // Initialize each subject
+        }
+    }
+
+    // Method to get student details (name and usn)
+    void getStudentDetails() {
+        System.out.print("Enter student name: ");
+        name = s.nextLine();
+        System.out.print("Enter student USN: ");
+        usn = s.nextLine();
+    }
+
+    // Method to get marks and credits for 8 subjects
+    void getMarks() {
+        for (int i = 0; i < 8; i++) {
+            System.out.println("Enter marks for subject " + (i + 1) + ": ");
+            subjects[i].subjectMarks = s.nextInt();
+
+            // Check if marks exceed 100
+            while (subjects[i].subjectMarks > 100 || subjects[i].subjectMarks < 0) {
+                System.out.println("Invalid marks! Enter a value between 0 and 100.");
+                subjects[i].subjectMarks = s.nextInt();
+            }
+
+            System.out.println("Enter credits for subject " + (i + 1) + ": ");
+            subjects[i].credits = s.nextInt();
+            
+            // Calculate grade for each subject based on marks
+            subjects[i].calculateGrade();
+        }
+    }
+
+    // Method to compute SGPA
+    void computeSGPA() {
+        int effectiveScore = 0;
+        int totalCredits = 0;
+
+        for (int i = 0; i < 8; i++) {
+            effectiveScore += (subjects[i].grade * subjects[i].credits);
+            totalCredits += subjects[i].credits;
+        }
+
+        SGPA = (double) effectiveScore / totalCredits;
+    }
+
+    // Method to display student details along with SGPA
+    void displayDetails() {
+        System.out.println("\nStudent Name: " + name);
+        System.out.println("Student USN: " + usn);
+        System.out.println("SGPA: " + SGPA);
+    }
+
+    public static void main(String[] args) {
+        // Create a Student object
+        Student student = new Student();
+
+        // Get student details, marks, and compute SGPA
+        student.getStudentDetails();
+        student.getMarks();
+        student.computeSGPA();
+
+        // Display the result
+        student.displayDetails();
+    }
+}
