@@ -1,0 +1,93 @@
+import java.util.Scanner;
+
+// Class to handle user input
+class InputScanner {
+    Scanner scanner = new Scanner(System.in);
+    
+    // Method to read integer input
+    public int readInt(String prompt) {
+        System.out.print(prompt);
+        return scanner.nextInt();
+    }
+}
+
+// Abstract class Shape
+abstract class Shape extends InputScanner {
+    int dimension1; // Can represent length or radius
+    int dimension2; // Can represent breadth or height (not used in Circle)
+
+    // Constructor to initialize dimensions
+    Shape(int dimension1, int dimension2) {
+        this.dimension1 = dimension1;
+        this.dimension2 = dimension2;
+    }
+
+    // Abstract method to print area
+    abstract void printArea();
+}
+
+// Class Rectangle
+class Rectangle extends Shape {
+    Rectangle(int length, int breadth) {
+        super(length, breadth);
+    }
+
+    @Override
+    void printArea() {
+        int area = dimension1 * dimension2;
+        System.out.println("Area of Rectangle: " + area);
+    }
+}
+
+// Class Triangle
+class Triangle extends Shape {
+    Triangle(int base, int height) {
+        super(base, height);
+    }
+
+    @Override
+    void printArea() {
+        double area = 0.5 * dimension1 * dimension2;
+        System.out.println("Area of Triangle: " + area);
+    }
+}
+
+// Class Circle
+class Circle extends Shape {
+    Circle(int radius) {
+        super(radius, 0); // dimension2 is not used
+    }
+
+    @Override
+    void printArea() {
+        double area = Math.PI * dimension1 * dimension1;
+        System.out.println("Area of Circle: " + area);
+    }
+}
+
+// Main class
+public class shapes {
+    public static void main(String[] args) {
+	      System.out.println("Name:aditya sharma");
+        System.out.println("USN:1BM22CS021");
+
+        InputScanner inputScanner = new InputScanner();
+
+        // Rectangle
+        int length = inputScanner.readInt("Enter length of Rectangle: ");
+        int breadth = inputScanner.readInt("Enter breadth of Rectangle: ");
+        Rectangle rectangle = new Rectangle(length, breadth);
+        rectangle.printArea();
+
+        // Triangle
+        int base = inputScanner.readInt("Enter base of Triangle: ");
+        int height = inputScanner.readInt("Enter height of Triangle: ");
+        Triangle triangle = new Triangle(base, height);
+        triangle.printArea();
+
+        // Circle
+        int radius = inputScanner.readInt("Enter radius of Circle: ");
+        Circle circle = new Circle(radius);
+        circle.printArea();
+    }
+}
